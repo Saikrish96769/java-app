@@ -36,8 +36,10 @@ pipeline {
                         CurrentBuild.result = 'UNSTABLE'
                     }
                     if (apply) {
+                        def kubectl = "/opt/homebrew/bin/kubectl" // Replace with the actual path to the Docker executable on your macOS machine
+                        dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
-                            kubectl apply -f .
+                            ${kubectl} apply -f .
                         """
                     }
                 }
@@ -61,8 +63,10 @@ pipeline {
                         CurrentBuild.result = 'UNSTABLE'
                     }
                     if (destroy) {
+                        def kubectl = "/opt/homebrew/bin/kubectl" // Replace with the actual path to the Docker executable on your macOS machine
+                        dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
-                            kubectl delete -f .
+                            ${kubectl} delete -f .
                         """
                     }
                 }
