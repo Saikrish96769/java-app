@@ -30,6 +30,7 @@ pipeline {
                     ${aws} configure set region "${params.region}"
                     ${aws} configure set outputformat "${params.outputformat}"
                     ${aws} eks update-kubeconfig --region ${params.region} --name ${params.cluster}
+                    ${aws} s3 ls
                 """
             }
         }
