@@ -20,7 +20,7 @@ pipeline {
         }
         stage('eks connect') {
             steps {
-                def aws = "/usr/local/bin/aws" // Replace with the actual path to the Docker executable on your macOS machine
+                def aws = "/usr/local/bin/aws"
                 dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                 sh """
                     ${aws} configure set aws_access_key_id "$ACCESS_KEY"
