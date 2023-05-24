@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script {
                     def apply = false
-                    def aws-vault = "/opt/homebrew/bin/aws-vault"
+                    def awsvault = "/opt/homebrew/bin/aws-vault"
                     def kubectl = "/opt/homebrew/bin/kubectl" 
                     try {
                         input message: 'Please confirm the apply to initiate the deployments', ok: 'Ready to apply the config'
@@ -58,7 +58,7 @@ pipeline {
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
                             pwd
-                            ${aws-vault} exec default -- ${kubectl} apply -f .
+                            ${awsvault} exec default -- ${kubectl} apply -f .
                         """
                     }
                     }
@@ -76,7 +76,7 @@ pipeline {
                 script {
                     def destroy = false
                     def kubectl = "/opt/homebrew/bin/kubectl"
-                    def aws-vault = "/opt/homebrew/bin/aws-vault" 
+                    def awsvault = "/opt/homebrew/bin/aws-vault" 
                     try {
                         input message: 'Please confirm the destroy to delete the deployments', ok: 'Ready to destroy the config'
                         destroy = true
@@ -88,7 +88,7 @@ pipeline {
                         // Replace with the actual path to the Docker executable on your macOS machine
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
-                            ${aws-vault} exec default -- ${kubectl} delete -f .
+                            ${awsvault} exec default -- ${kubectl} delete -f .
                         """
                     }
                 }
