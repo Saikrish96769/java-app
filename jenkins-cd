@@ -54,12 +54,11 @@ pipeline {
                     }
                     if (apply) {
                         def kubectl = "/opt/homebrew/bin/kubectl"
-                        def aws = "/usr/local/bin/aws" // Replace with the actual path to the Docker executable on your macOS machine
+                        def aws-vault = "/opt/homebrew/bin/aws-vault" // Replace with the actual path to the Docker executable on your macOS machine
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
                             pwd
-                            ${aws} --version
-                            ${kubectl} apply -f .
+                            ${aws-vault} exec default -- ${kubectl} apply -f .
                         """
                     }
                     }
@@ -84,10 +83,11 @@ pipeline {
                         CurrentBuild.result = 'UNSTABLE'
                     }
                     if (destroy) {
-                        def kubectl = "/opt/homebrew/bin/kubectl" // Replace with the actual path to the Docker executable on your macOS machine
+                        def kubectl = "/opt/homebrew/bin/kubectl"
+                        def aws-vault = "/opt/homebrew/bin/aws-vault" // Replace with the actual path to the Docker executable on your macOS machine
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
-                            ${kubectl} delete -f .
+                            ${aws-vault} exec default -- ${kubectl} delete -f .
                         """
                     }
                 }
