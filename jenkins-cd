@@ -20,6 +20,7 @@ pipeline {
         }
         stage('eks connect') {
             steps {
+                script {
                 def aws = "/usr/local/bin/aws"
                 dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                 sh """
@@ -29,6 +30,7 @@ pipeline {
                     ${aws} eks --region ${params.region} update-kubeconfig --name ${params.cluster}
                 """
             }
+        }
         }
         }
         stage('eks deployments') {
