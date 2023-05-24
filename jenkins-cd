@@ -46,7 +46,7 @@ pipeline {
                 script {
                     def apply = false
                     def awsvault = "/opt/homebrew/bin/aws-vault"
-                    def kubectl = "/opt/homebrew/bin/kubectl" 
+                    def kubectl = "/usr/local/bin/kubectl-aws_secrets_manager" 
                     try {
                         input message: 'Please confirm the apply to initiate the deployments', ok: 'Ready to apply the config'
                         apply = true
@@ -75,7 +75,7 @@ pipeline {
             steps {
                 script {
                     def destroy = false
-                    def kubectl = "/opt/homebrew/bin/kubectl"
+                    def kubectl = "/usr/local/bin/kubectl-aws_secrets_manager"
                     def awsvault = "/opt/homebrew/bin/aws-vault" 
                     try {
                         input message: 'Please confirm the destroy to delete the deployments', ok: 'Ready to destroy the config'
