@@ -8,11 +8,6 @@ pipeline {
         string(name: 'outputformat', defaultValue: 'yaml', description: 'Eks cluster outputformat')
     }
 
-    environment {
-        ACCESS_KEY = 'AKIAXD2NS22QRNJW554F'
-        SECRET_KEY = '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'
-    }
-
     stages {
         stage('git checkout') {
             steps {
@@ -23,14 +18,10 @@ pipeline {
             steps {
                 script {
                 def aws = "/usr/local/bin/aws"
+                def awsvault = "/opt/homebrew/bin/aws-vault"
                 dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                 sh """
-                    ${aws} configure set aws_access_key_id "$ACCESS_KEY"
-                    ${aws} configure set aws_secret_access_key "$SECRET_KEY" 
-                    ${aws} configure set region "${params.region}"
-                    ${aws} configure set outputformat "${params.outputformat}"
-                    ${aws} s3 ls
-                    ${aws} eks update-kubeconfig --region ${params.region} --name ${params.cluster}
+                    ${awsvault} exec Saikrishna8341 -- ${aws} eks update-kubeconfig --region ${params.region} --name ${params.cluster}
                 """
             }
         }
@@ -47,7 +38,7 @@ pipeline {
                     def apply = false
                     def awsvault = "/opt/homebrew/bin/aws-vault"
                     def kubectl = "/opt/homebrew/bin/kubectl"
-                    def awssecretsmanager = "/opt/homebrew/bin/kubectl-aws_secrets_manager" 
+                    //def awssecretsmanager = "/opt/homebrew/bin/kubectl-aws_secrets_manager" 
                     try {
                         input message: 'Please confirm the apply to initiate the deployments', ok: 'Ready to apply the config'
                         apply = true
@@ -59,7 +50,7 @@ pipeline {
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
                             pwd
-                            ${awsvault} exec Saikrishna8341 -- ${kubectl} --credential-plugin=${awssecretsmanager} apply -f .
+                            ${awsvault} exec Saikrishna8341 -- ${kubectl} apply -f .
                         """
                     }
                     }
@@ -78,7 +69,7 @@ pipeline {
                     def destroy = false
                     def kubectl = "/opt/homebrew/bin/kubectl"
                     def awsvault = "/opt/homebrew/bin/aws-vault"
-                    def awssecretsmanager = "/opt/homebrew/bin/kubectl-aws_secrets_manager"
+                    //def awssecretsmanager = "/opt/homebrew/bin/kubectl-aws_secrets_manager"
                     try {
                         input message: 'Please confirm the destroy to delete the deployments', ok: 'Ready to destroy the config'
                         destroy = true
@@ -90,7 +81,7 @@ pipeline {
                         // Replace with the actual path to the Docker executable on your macOS machine
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
-                            ${awsvault} exec Saikrishna8341 -- ${kubectl} --credential-plugin=${awssecretsmanager} delete -f .
+                            ${awsvault} exec Saikrishna8341 -- ${kubectl} delete -f .
                         """
                     }
                 }
