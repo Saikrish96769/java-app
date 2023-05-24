@@ -59,7 +59,7 @@ pipeline {
                         sh """
                             pwd
                             ${aws} --version
-                            ${aws} ${kubectl} apply -f .
+                            ${kubectl} apply -f .
                         """
                     }
                     }
