@@ -56,6 +56,7 @@ pipeline {
                         def kubectl = "/opt/homebrew/bin/kubectl" // Replace with the actual path to the Docker executable on your macOS machine
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
+                            pwd
                             ${kubectl} apply -f .
                         """
                     }
