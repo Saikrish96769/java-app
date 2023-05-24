@@ -23,10 +23,10 @@ pipeline {
                 def aws = "/usr/local/bin/aws" // Replace with the actual path to the Docker executable on your macOS machine
                 dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                 sh """
-                    aws configure set aws_access_key_id "$ACCESS_KEY"
-                    aws configure set aws_secret_access_key "$SECRET_KEY" 
-                    aws configure set region "${params.region}"
-                    aws eks --region ${params.region} update-kubeconfig --name ${params.cluster}
+                    ${aws} configure set aws_access_key_id "$ACCESS_KEY"
+                    ${aws} configure set aws_secret_access_key "$SECRET_KEY" 
+                    ${aws} configure set region "${params.region}"
+                    ${aws} eks --region ${params.region} update-kubeconfig --name ${params.cluster}
                 """
             }
         }
