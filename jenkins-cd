@@ -45,6 +45,8 @@ pipeline {
             steps {
                 script {
                     def apply = false
+                    def aws-vault = "/opt/homebrew/bin/aws-vault"
+                    def kubectl = "/opt/homebrew/bin/kubectl" 
                     try {
                         input message: 'Please confirm the apply to initiate the deployments', ok: 'Ready to apply the config'
                         apply = true
@@ -52,9 +54,7 @@ pipeline {
                         apply = false
                         CurrentBuild.result = 'UNSTABLE'
                     }
-                    if (apply) {
-                        def kubectl = "/opt/homebrew/bin/kubectl"
-                        def aws-vault = "/opt/homebrew/bin/aws-vault" // Replace with the actual path to the Docker executable on your macOS machine
+                    if (apply) {// Replace with the actual path to the Docker executable on your macOS machine
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
                             pwd
@@ -75,6 +75,8 @@ pipeline {
             steps {
                 script {
                     def destroy = false
+                    def kubectl = "/opt/homebrew/bin/kubectl"
+                    def aws-vault = "/opt/homebrew/bin/aws-vault" 
                     try {
                         input message: 'Please confirm the destroy to delete the deployments', ok: 'Ready to destroy the config'
                         destroy = true
@@ -83,8 +85,7 @@ pipeline {
                         CurrentBuild.result = 'UNSTABLE'
                     }
                     if (destroy) {
-                        def kubectl = "/opt/homebrew/bin/kubectl"
-                        def aws-vault = "/opt/homebrew/bin/aws-vault" // Replace with the actual path to the Docker executable on your macOS machine
+                        // Replace with the actual path to the Docker executable on your macOS machine
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
                             ${aws-vault} exec default -- ${kubectl} delete -f .
