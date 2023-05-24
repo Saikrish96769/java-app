@@ -59,7 +59,7 @@ pipeline {
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
                             pwd
-                            ${awsvault} exec Saikrishna8341 -- ${kubectl} --credential-plugin=awssecretsmanager apply -f .
+                            ${awsvault} exec Saikrishna8341 -- ${kubectl} --credential-plugin=${awssecretsmanager} apply -f .
                         """
                     }
                     }
@@ -90,7 +90,7 @@ pipeline {
                         // Replace with the actual path to the Docker executable on your macOS machine
                         dir('/Users/saikrish/.jenkins/workspace/java-deploy') { 
                         sh """
-                            ${awsvault} exec Saikrishna8341 -- ${kubectl} --credential-plugin=awssecretsmanager delete -f .
+                            ${awsvault} exec Saikrishna8341 -- ${kubectl} --credential-plugin=${awssecretsmanager} delete -f .
                         """
                     }
                 }
